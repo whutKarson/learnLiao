@@ -28,6 +28,7 @@ def trim(s):
 	"""
 	# option2 类似于冒泡排序，遍历整个str list，如果前头或者后头为空，初始游标往后挪一位，末尾游标往前挪一位
 
+	"""
 	start = 0    # 首游标起始值
 	end = len(s) - 1 # 末尾游标初始值
 
@@ -40,6 +41,17 @@ def trim(s):
 			end -= 1
 			print(f"after end {end}")
 	return s[start:end + 1]   #返回依据首末游标处str
+	"""
+	# option3 和option2一样的算法，只是代码上更加简洁一些，而且实现方式上程序负担也没那么重？依赖于切片操作所需要耗费的资源数
+	while s[0:1] == ' ':    # 获取首个index处是否为空格值
+		s = s[1:]    # 如果首字母为空格值，切片，并重新赋值s
+
+	while s[-1:] == ' ':     # 获取末尾index处是否为空格值
+		s = s[:-1]     # 如果末尾字母为空格值，切片，并重新赋值s
+
+	print(s)
+	return s 
+
 
 # 测试
 
