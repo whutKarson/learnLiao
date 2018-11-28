@@ -62,3 +62,56 @@ print(r_prod_L3)
 print(r_prod_L4)
 print(r_prod_L5)
 
+"""
+利用map和reduce编写一个str2float函数，把字符串'123.456'转换成浮点数123.456：
+"""
+def str2float(s):
+	"""
+	大概思路，先找寻s里头是否有"."并确定index，
+	利用map把对应的s转换成为数字
+	利用reduce把对应的数字变成一个number总和
+	"""
+	 # 先创建一个digit 字符数字对应表
+	DIGITS = {
+	 	'0': 0, 
+	 	'1': 1,
+	 	'2': 2,
+	 	'3': 3,
+	 	'4': 4,
+	 	'5': 5,
+	 	'6': 6,
+	 	'7': 7,
+	 	'8': 8,
+	 	'9': 9
+	}
+
+	index_of_dot = s.index('.')
+
+	right, left = map(lambda x: DIGITS[x], s[:index_of_dot]), map(lambda x: DIGITS[x], s[index_of_dot+1:])
+	#print(f"right: {right} , left: {left}")
+
+	sum_right = reduce(lambda x,y: x*10 + y, right)
+	"""
+	n = 0
+	sum_left = 0
+	for i in left:
+		sum_left += i * (0.1 ** (n + 1))
+		n += 1
+	"""
+	"""
+	第二种思路去处理 右边的小数点部分
+	比如说left现在等于 [4,5,6],
+	先把它拼接成数字456， 然后乘以对应的list的长度0.1的阶乘
+	"""
+	sum_left = reduce(lambda x, y: x*10 + y, left) * 0.1 ** len(s[index_of_dot+1:])
+
+	return sum_left + sum_right
+
+
+
+print('str2float(\'123.456\') =', str2float('123.456'))
+if abs(str2float('123.456') - 123.456) < 0.00001:
+    print('测试成功!')
+else:
+    print('测试失败!')
+
